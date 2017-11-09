@@ -1,0 +1,59 @@
+<% pages = if @projects.total_count > 1000 %>
+             <% 100 %>
+           <% else %>
+             <% (@projects.total_count / 10 + (@projects.total_count % 10 == 0 ? 0 : 1)) %>
+           <% end %>
+<% current_page = params[:page].to_i %>
+
+<nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item <%= 'disabled' unless has_prev_page? %>">
+      <%= link_to 'Previous', projects_search_path(query: params[:query], page: current_page - 1), method: :get %>
+    </li>
+
+    <% if pages > 12 %>
+      <% if (1 .. 5).include?(current_page) || ((pages - 2) .. (pages)).include?(current_page) %>
+        <% (1 .. 6).each do |number| %>
+          <%= render 'pagination_page_link', page_number: number %>
+        <% end %>
+
+        <li class="page-item disabled">
+          <span>...</span>
+        </li>
+
+        <% ((pages - 4) .. pages).each do |number| %>
+          <%= render 'pagination_page_link', page_number: number %>
+        <% end %>
+
+      <% elsif (6 .. (pages - 3)).include?(current_page) %>
+        <% (1 .. 2).each do |number| %>
+          <%= render 'pagination_page_link', page_number: number %>
+        <% end %>
+
+        <li class="page-item disabled">
+          <span>...</span>
+        </li>
+
+        <% ((current_page - 2) .. (current_page + 2)).each do |number| %>
+          <%= render 'pagination_page_link', page_number: number %>
+        <% end %>
+
+        <li class="page-item disabled">
+          <span>...</span>
+        </li>
+
+        <% ((pages - 2) .. pages).each do |number| %>
+          <%= render 'pagination_page_link', page_number: number %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <% (1 .. pages).each do |number| %>
+        <%= render 'pagination_page_link', page_number: number %>
+      <% end %>
+    <% end %>
+
+    <li class="page-item <%='disabled' unless has_next_page? %>">
+      <%= link_to 'Next', projects_search_path(query: params[:query], page: current_page + 1), method: :get %>
+    </li>
+  </ul>
+</nav>

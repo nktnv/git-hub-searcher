@@ -1,25 +1,27 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Install Ruby 2.4.1 and Ruby on Rails 5.1.4
 
-Things you may want to cover:
+Run next commands to setup a local postgresql DB:
+- sudo apt-get install postgresql
+- sudo apt-get install libpq-dev
+- sudo -u postgres psql
+- postgres=#\q
 
-* Ruby version
+Create a user:
+- CREATE ROLE #{your_login} LOGIN 
+  ENCRYPTED PASSWORD '#{your_password}' 
+  NOSUPERUSER NOINHERIT CREATEDB NOCREATEROLE;
+- \q
 
-* System dependencies
+Run next command to install all required gems:
+- bundle install
 
-* Configuration
+Create DB and migrate it:
+- rake db:setup
+- rake db:migrate
 
-* Database creation
+Setup your GitHub access token to 'GIT_HUB_ACCESS_TOKEN' environment variable
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# git-hub-searcher
+Start the server:
+- rails s

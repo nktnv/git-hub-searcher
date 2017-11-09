@@ -1,0 +1,33 @@
+<% item_type = 'user' %>
+<div class="user-details">
+  <div class="col-md-4">
+    <div class="card pull-right">
+      <%= image_tag @user.avatar_url, height: 230, weight: 230, class: 'card-img-top' %>
+      <div class="card-body">
+        <h4 class="card-title">
+          <%= @user.name %>
+        </h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card well">
+      <div class="card-body">
+        <div class="pull-right">
+          <% if Vote.vote_by_params('user', @user.id, 'like').nil? %>
+            <%= link_to '<i class="fa fa-star-o fa-3x" aria-hidden="true"></i>'.html_safe, vote_path(vote: {item_type: item_type, item_id: @user.id, status: 'like'}), remote: true, method: :put, id: @user.id %>
+          <% else %>
+            <%= link_to '<i class="fa fa-star fa-3x" aria-hidden="true"></i>'.html_safe, vote_path(vote: {item_type: item_type, item_id: @user.id, status: 'dislike'}), remote: true, method: :put, id: @user.id %>
+          <% end %>
+        </div>
+        <p class="card-text"><%= @user.login %></p>
+        <% if @user.company.present? %>
+          <p class="card-text">Company: <%= @user.company %></p>
+        <% end %>
+        <p class="card-text">Followers: <%= @user.followers %></p>
+        <%= link_to 'Visit blog', @user.blog, target: '_blank', class: 'btn btn-primary' if @user.blog.present? %>
+      </div>
+    </div>
+  </div>
+</div>

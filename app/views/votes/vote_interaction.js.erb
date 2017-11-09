@@ -1,0 +1,8 @@
+<% new_class = @vote.like? ? 'fa-star' : 'fa-star-o' %>
+<% old_class = new_class == 'fa-star' ? 'fa-star-o' : 'fa-star' %>
+
+var parsedVoteUrl = $('#<%= @vote.item_id %>').attr('href').split('=');
+parsedVoteUrl[parsedVoteUrl.length - 1] = '<%= @vote.like? ? 'dislike' : 'like' %>';
+
+$('#<%= @vote.item_id %> i').removeClass('<%= old_class %>').addClass('<%= new_class %>');
+$('#<%= @vote.item_id %>').attr('href', parsedVoteUrl.join('='));

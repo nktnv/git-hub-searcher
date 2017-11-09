@@ -1,0 +1,35 @@
+<div>
+  <div class="col-md-8">
+    <div class="jumbotron">
+      <h1 class="display-3"><%= project.full_name %></h1>
+      <% if project.homepage.present? %>
+        <p class="lead"><%= project.description %></p>
+      <% end %>
+      <hr class="my-4">
+      <p>Watchers: <%= project.watchers_count %></p>
+      <p>Forks: <%= project.forks_count %></p>
+      <p>Open issues: <%= project.open_issues_count %></p>
+      <% if project.homepage.present? %>
+        <p>Homepage: <%= link_to project.homepage, project.homepage, target: '_blank' %></p>
+      <% end %>
+      <p>GitHub repository: <%= link_to project.html_url, project.html_url, target: '_blank' %></p>
+      <p class="pull-right muted">Created at: <%= project.created_at.strftime('%B %d, %Y, %l:%M%P %Z') %></p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <% item_type = 'user' %>
+    <h1>Contributors:</h1>
+    <div class="list-group">
+      <% project.rels[:contributors].get.data.each do |contributor| %>
+        <div class="list-group-item list-group-item-action">
+          <%= link_to contributor.login, users_path(username: contributor.login), class: 'massive-link' %>
+          <% if Vote.vote_by_params(item_type, contributor.id, 'like').nil? %>
+            <%= link_to '<i class="fa fa-star-o fa-2x pull-right" aria-hidden="true"></i>'.html_safe, vote_path(vote: {item_type: item_type, item_id: contributor.id, status: 'like'}), remote: true, method: :put, id: contributor.id %>
+          <% else %>
+            <%= link_to '<i class="fa fa-star fa-2x pull-right" aria-hidden="true"></i>'.html_safe, vote_path(vote: {item_type: item_type, item_id: contributor.id, status: 'dislike'}), remote: true, method: :put, id: contributor.id %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

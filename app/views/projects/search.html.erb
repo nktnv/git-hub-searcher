@@ -1,0 +1,33 @@
+<% item_type = 'project' %>
+<%= render 'pagination' %>
+<div class="search-container">
+  <div class="col-md-12">
+    <% if @projects.items.size.zero? %>
+      <div class="well text-center">
+        <h3 class="text-muted">For search term "<%= params[:query] %>" no results were found</h3>
+      </div>
+    <% else %>
+      <h3 class="text-muted">For search term "<%= params[:query] %>" found <%= @projects.total_count %> results:</h3>
+      <% @projects.items.each do |project| %>
+        <div class="well search-result">
+          <%= link_to project.name, projects_path(full_name: project.full_name), class: 'massive-link' %>
+          <%= link_to project.homepage, project.homepage, target: '_blank', class: 'left-padding' if project.homepage.present? %>
+          <%= link_to project.owner.login, users_path(username: project.owner.login), class: 'pull-right' %>
+          <div class="search-details">
+            <p><%= project.description if project.description.present? %></p>
+            <p>
+              <span>Watchers: <%= project.watchers_count %></span>
+              <span class="left-padding">Forks: <%= project.forks_count %></span>
+              <% if Vote.vote_by_params(item_type, project.id, 'like').nil? %>
+                <%= link_to '<i class="fa fa-star-o fa-2x pull-right" aria-hidden="true"></i>'.html_safe, vote_path(vote: {item_type: item_type, item_id: project.id, status: 'like'}), remote: true, method: :put, id: project.id %>
+              <% else %>
+                <%= link_to '<i class="fa fa-star fa-2x pull-right" aria-hidden="true"></i>'.html_safe, vote_path(vote: {item_type: item_type, item_id: project.id, status: 'dislike'}), remote: true, method: :put, id: project.id %>
+              <% end %>
+            </p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<%= render 'pagination' %>

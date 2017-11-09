@@ -12,4 +12,27 @@
  *
  *= require_tree .
  *= require_self
+ *= require bootstrap_and_overrides
+ *= require font-awesome
  */
+
+.massive-link {
+  font-size: 20px;
+}
+
+p {
+  padding: 5px;
+}
+
+.card-title, .card.well, .user-details, .search-details {
+  padding-top: 15px;
+}
+
+.search-container {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.left-padding {
+  padding-left: 25px;
+}
