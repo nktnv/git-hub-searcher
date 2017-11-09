@@ -12,8 +12,8 @@
     </li>
 
     <% if pages > 12 %>
-      <% if (1 .. 5).include?(current_page) || ((pages - 2) .. (pages)).include?(current_page) %>
-        <% (1 .. 6).each do |number| %>
+      <% if (1 .. 4).include?(current_page) || ((pages - 4) .. (pages)).include?(current_page) %>
+        <% (1 .. 5).each do |number| %>
           <%= render 'pagination_page_link', page_number: number %>
         <% end %>
 
@@ -21,11 +21,11 @@
           <span>...</span>
         </li>
 
-        <% ((pages - 4) .. pages).each do |number| %>
+        <% ((pages - 6) .. pages).each do |number| %>
           <%= render 'pagination_page_link', page_number: number %>
         <% end %>
 
-      <% elsif (6 .. (pages - 3)).include?(current_page) %>
+      <% elsif (5 .. (pages - 5)).include?(current_page) %>
         <% (1 .. 2).each do |number| %>
           <%= render 'pagination_page_link', page_number: number %>
         <% end %>
@@ -34,7 +34,7 @@
           <span>...</span>
         </li>
 
-        <% ((current_page - 2) .. (current_page + 2)).each do |number| %>
+        <% ((current_page - 1) .. (current_page + 1)).each do |number| %>
           <%= render 'pagination_page_link', page_number: number %>
         <% end %>
 
