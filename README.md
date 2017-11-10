@@ -2,13 +2,12 @@
 
 Install Ruby 2.4.1 and Ruby on Rails 5.1.4
 
-Run next commands to setup a local postgresql DB:
+Run next commands to setup a postgresql DB:
 - sudo apt-get install postgresql
 - sudo apt-get install libpq-dev
-- sudo -u postgres psql
-- postgres=#\q
 
 Create a user:
+- sudo -u postgres psql
 - CREATE ROLE #{your_login} LOGIN 
   ENCRYPTED PASSWORD '#{your_password}' 
   NOSUPERUSER NOINHERIT CREATEDB NOCREATEROLE;
